@@ -11,14 +11,29 @@ class App extends Component {
           <tbody>
             <tr>
               <td>
-                <table><tbody><tr><td><img className="logo" alt="" src={require('.\\Img\\React_logo.png')} /></td><td><h1>My First React App</h1></td></tr></tbody></table>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <img className="logo" alt="" src={require('.\\Img\\React_logo.png')} />
+                      </td>
+                      <td>
+                        <h1>My First React App</h1>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </td>              
             </tr>
             <tr>
-              <td><div className="appBar"/></td>
+              <td>
+                <div className="appBar"/>
+              </td>
             </tr>
             <tr>
-              <td><Card /></td>
+              <td>
+                <Card />
+              </td>
             </tr>
           </tbody>
         </table>        
