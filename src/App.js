@@ -2,25 +2,27 @@ import React, { Component } from 'react';
 import './App.css';
 import Card from './Card/Card';
 
+
 class App extends Component {
   render() {
-    return (
+    return (      
       <div className="App">
-        <table>
+        <table className="appTable">
           <tbody>
             <tr>
-              <td className="appHeader">
-                Header
-              </td>
+              <td>
+                <table><tbody><tr><td><img className="logo" alt="" src={require('.\\Img\\React_logo.png')} /></td><td><h1>My First React App</h1></td></tr></tbody></table>
+              </td>              
             </tr>
             <tr>
-              <td className="appBody">
-                <Card />                
-              </td>
+              <td><div className="appBar"/></td>
+            </tr>
+            <tr>
+              <td><Card /></td>
             </tr>
           </tbody>
-        </table>
-      </div>
+        </table>        
+      </div>      
     );
   }
 }

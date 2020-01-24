@@ -1,16 +1,32 @@
 .card {
-    width: 300px;
-    height: 200px;
-    border: 3px solid #00A86B;
+    margin-top: 20px;
+    width: 400px;
+    height: 300px;
+    border: 1px solid #C0C0C0;
+    border-radius: 5px;
+}
+.cardTable {
+  margin: 0 auto;
+  width: 95%;
 }
 .cardHeader {
-    padding-left: 20px;
-    color: #00A86B;
+    margin-top: 8px;
+    width: 100%;
+    font-weight: bold;
 }
-.cardBody {
-    padding-left: 20px;
-    color: #00A86B;
+.cardCmPosition {
+    text-align: right;
 }
+.cardCheckmark {    
+    height: 15px;
+    width: 15px;   
+  }
 hr {
-    width: 90%
+    width: 100%;
+}
+.blackText{    
+    color: black;
+}  
+.redText{    
+    color: red;
 }
