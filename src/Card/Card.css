@@ -1,28 +1,45 @@
-.card {
+.card {   
+  padding: 15px; 
   margin-top: 20px;
   width: 400px;
   height: 300px;
   border: 1px solid #C0C0C0;
   border-radius: 5px;
 }
-.cardTable {
-  margin: 0 auto;
-  width: 95%;
-}
 .cardHeader {
-  margin-top: 8px;
-  width: 100%;
   font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  text-overflow: ellipsis;
 }
-.cardCmPosition {
-  text-align: right;
+.cardHeader div {
+  flex: 1;      
 }
-.cardCheckmark {    
-  height: 15px;
-  width: 15px;
-  margin-left: 7px;  
+.cardHeader>*:last-child {
+  text-align: right;    
 }
-.cardEdit, .cardSave, .cardCancel {
+.cardHeader>*:first-child {
+    flex: 2;  
+  }
+.cardTitle {
+    width:200px;
+    height: 20px;
+}
+.cardBodyEdit {
+    width:100%;
+    height: 250px;
+    resize: none;
+    text-overflow: ellipsis;
+    word-break: break-all;
+}
+.cardBodyShow {
+    width:100%;
+    height: 250px;
+    overflow-wrap: break-word;
+    overflow: hidden; 
+}
+.cardEdit, .cardSave, .cardCancel, .cardCheckmark {
   color:gray;
   cursor: pointer;
   margin-left: 7px;

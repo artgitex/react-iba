@@ -18,10 +18,13 @@ class Card extends Component {
 
   cardEditHandler = () => {
     this.setState({
-        cardEdit: !this.state.cardEdit,
-        cardHeaderTemp: this.state.cardHeaderText,
-        cardBodyTemp: this.state.cardBodyText
+      cardEdit: !this.state.cardEdit,
+      cardHeaderTemp: this.state.cardHeaderText,
+      cardBodyTemp: this.state.cardBodyText
     });
+    if (this.state.cbChecked) {
+      this.setState({cbChecked: false});
+    };
   };
 
   cardSaveHandler = () => {
@@ -45,76 +48,57 @@ class Card extends Component {
   render() {
     let textStyle = this.state.cbChecked ? "redText" : "blackText";
     let cardActions = null;
-    let cardHeader = null;
+    let cardTitle = null;
     let cardBody = null;    
   
     if (this.state.cardEdit) {    
+      cardTitle = (
+        <div>
+          <input className="cardTitle" maxLength="25" type="text" value={this.state.cardHeaderTemp} onChange={this.cardChangeHeader}/>         
+        </div>
+      );
       cardActions = (
-        <span>
+        <div>
           <MdSave className="cardSave" onClick={this.cardSaveHandler}/>
           <MdCancel className="cardCancel" onClick={this.cardCancelHandler}/>          
-        </span>
-      );
-      cardHeader = (
-        <span>
-          <input type='text' value={this.state.cardHeaderTemp} onChange={this.cardChangeHeader}/>
-        </span>
-      );
+        </div>
+      );      
       cardBody = (
-        <span>
-          <input type='text' value={this.state.cardBodyTemp} onChange={this.cardChangeBody}/>
-        </span>
+        <div>
+          <textarea className="cardBodyEdit" value={this.state.cardBodyTemp} onChange={this.cardChangeBody}/>
+        </div>
       );      
     } else {
-      cardHeader = (
-        <span>
+       cardTitle = (
+        <div className="cardTitle">
           {this.state.cardHeaderText}
-        </span>
-      );
-      cardBody = (
-        <span>
-          {this.state.cardBodyText}
-        </span>
+        </div>
       );
       cardActions = (
-        <span>
+        <div>
           <MdEdit className="cardEdit" onClick={this.cardEditHandler} />
           <input className="cardCheckmark" type="checkbox" onChange={this.checkBoxHandler} />          
-        </span>
+        </div>
       );
+      cardBody = (
+        <div className="cardBodyShow">          
+          {this.state.cardBodyText}
+        </div>
+      );
+      
     };
 
-    return (
+    return (      
       <div className="card">
-        <table className="cardTable">
-          <tbody>
-            <tr>
-              <td>
-                <table className="cardHeader">
-                  <tbody>
-                    <tr>
-                      <td>
-                        {cardHeader}
-                      </td>
-                      <td className="cardCmPosition">
-                        {cardActions}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <hr/>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <p className={textStyle}>
-                  {cardBody}
-                </p>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        <div className="cardHeader">
+          {cardTitle}
+          {cardActions}
+        </div>
+        <hr />
+        <div className={textStyle}>          
+            {cardBody}          
+        </div>
+      </div>      
     );
   }
 }
