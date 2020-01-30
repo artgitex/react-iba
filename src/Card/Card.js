@@ -4,12 +4,12 @@ import { MdEdit, MdSave, MdCancel } from 'react-icons/md';
 
 class Card extends Component {
   state = {
-    cardHeaderText: 'Tab number One',
-    cardBodyText: 'I expect some text here...',
+    cardHeaderText: this.props.cardHeaderText,
+    cardBodyText: this.props.cardBodyText,
     cardHeaderTemp: '',
     cardBodyTemp: '',
     cbChecked: false,
-    cardEdit: false
+    cardEdit: false   
   };
 
   checkBoxHandler = () => {
@@ -45,39 +45,22 @@ class Card extends Component {
     this.setState({cardBodyTemp:  event.target.value});
   };
     
-  render() {
+  render() {    
     let textStyle = this.state.cbChecked ? "redText" : "blackText";
     let cardActions = null;
     let cardTitle = null;
     let cardBody = null;    
-  
-    if (this.state.cardEdit) {    
+    
+    if (this.props.cbOnlyView) {
+
       cardTitle = (
-        <div>
-          <input className="cardTitle" maxLength="25" type="text" value={this.state.cardHeaderTemp} onChange={this.cardChangeHeader}/>         
-        </div>
-      );
-      cardActions = (
-        <div>
-          <MdSave className="cardSave" onClick={this.cardSaveHandler}/>
-          <MdCancel className="cardCancel" onClick={this.cardCancelHandler}/>          
-        </div>
-      );      
-      cardBody = (
-        <div>
-          <textarea className="cardBodyEdit" value={this.state.cardBodyTemp} onChange={this.cardChangeBody}/>
-        </div>
-      );      
-    } else {
-       cardTitle = (
         <div className="cardTitle">
           {this.state.cardHeaderText}
         </div>
       );
       cardActions = (
-        <div>
-          <MdEdit className="cardEdit" onClick={this.cardEditHandler} />
-          <input className="cardCheckmark" type="checkbox" onChange={this.checkBoxHandler} />          
+        <div>          
+          <input className="cardCheckmark" type="checkbox" onChange={this.checkBoxHandler} checked={this.state.cbChecked}/>
         </div>
       );
       cardBody = (
@@ -85,8 +68,43 @@ class Card extends Component {
           {this.state.cardBodyText}
         </div>
       );
-      
-    };
+    } else {
+      if (this.state.cardEdit) {    
+        cardTitle = (
+          <div>
+            <input className="cardTitle" maxLength="25" type="text" value={this.state.cardHeaderTemp} onChange={this.cardChangeHeader}/>         
+          </div>
+        );
+        cardActions = (
+          <div>
+            <MdSave className="cardSave" onClick={this.cardSaveHandler}/>
+            <MdCancel className="cardCancel" onClick={this.cardCancelHandler}/>          
+          </div>
+        );      
+        cardBody = (
+          <div>
+            <textarea className="cardBodyEdit" value={this.state.cardBodyTemp} onChange={this.cardChangeBody}/>
+          </div>
+        );      
+      } else {
+         cardTitle = (
+          <div className="cardTitle">
+            {this.state.cardHeaderText}
+          </div>
+        );
+        cardActions = (
+          <div>
+            <MdEdit className="cardEdit" onClick={this.cardEditHandler} />
+            <input className="cardCheckmark" type="checkbox" onChange={this.checkBoxHandler} checked={this.state.cbChecked} />
+          </div>
+        );
+        cardBody = (
+          <div className="cardBodyShow">          
+            {this.state.cardBodyText}
+          </div>
+        );       
+      };
+    }    
 
     return (      
       <div className="card">
