@@ -18,16 +18,11 @@ h1 {
   height: 10px;
   background-color: #61DBFB;
 }
-.appCheckmark {
-  margin: 10px;
-}
-
 .cardBody {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;  
 }
-
 .cardBody div {  
   flex-wrap: wrap;
 }

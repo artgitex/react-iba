@@ -1,5 +1,20 @@
 import React, { Component } from 'react';
 import Card from '../Card/Card';
+import './Body.css';
+import styled from 'styled-components';
+
+const StyledCheckBox = styled.div`
+  margin-top: 5px;
+  width: 110px;
+  border-radius: 5px; 
+  user-select: none;
+
+  &: hover {
+    background: #61DBFB;
+    font-weight: bold;
+    color: white;
+  }
+`;
 
 class Body extends Component {
     state = {
@@ -29,15 +44,15 @@ class Body extends Component {
              onlyView={this.state.onlyView}
              {...card}
            />              
-         })};
+         })}
        </div>
       );      
       return (
-        <div>
-          <div>
+        <div>         
+          <StyledCheckBox>
             <input className="appCheckmark" type="checkbox" id="onlyView" name="onlyView" onChange={this.checkBoxAppHandler} />
             <label htmlFor="onlyView">view only</label>
-          </div>
+          </StyledCheckBox>          
           {cards}
         </div>
       )

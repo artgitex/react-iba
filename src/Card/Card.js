@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
 import './Card.css';
 import { MdEdit, MdSave, MdCancel } from 'react-icons/md';
+import styled from 'styled-components';
+
+const StyledCard = styled.div`
+  margin: 10px;
+  padding: 15px;
+  width: 400px;
+  height: 300px;
+  border: 1px solid;
+  border-color: ${props => props.alt ? '#FFA07A' : '#C0C0C0'}; ;
+  border-radius: 5px;
+`;
 
 class Card extends Component {
   state = {
@@ -97,45 +108,37 @@ class Card extends Component {
     let cardBody = null;
     let textStyle = this.state.cbChecked ? "redText" : "blackText";
 
-    if (this.props.onlyView) {
+    if (this.props.onlyView || !this.state.cardEdit) {
       cardBody = (
         <div className={textStyle}>
           <div className="cardBodyShow">          
             {this.state.bodyText}
           </div>
         </div>
-      )      
+      )
     } else {
-      if (this.state.cardEdit) {
-        cardBody = (
-          <div>
+      cardBody = (
+        <div>
           <div>
             <textarea className="cardBodyEdit" value={this.state.bodyTextTemp} onChange={this.changeBodyHandler}/>
           </div>            
-          </div>
-        )
-      } else {
-        cardBody = (
-          <div className={textStyle}>
-            <div className="cardBodyShow ">
-              {this.state.bodyText}
-            </div>
-          </div>
-        )
-      }
+        </div>
+      )
     }
 
-    return cardBody
-    
+    return cardBody    
   }
 
   render() {
     return (
-      <div className="card">
-        {this.renderCardHeader()}
-        <hr />
-        {this.renderCardBody()}
+      <div>
+        <StyledCard alt={this.props.onlyView ? 1 : undefined}>
+          {this.renderCardHeader()}
+          <hr />
+          {this.renderCardBody()}
+        </StyledCard>
       </div>
+      
     );
   }
 }
