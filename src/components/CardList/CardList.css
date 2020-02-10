@@ -1,0 +1,23 @@
+.ButtonBar {
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 230px;
+}
+
+.ButtonBar div {
+  flex: 1;  
+  background: #61DBFB;
+  margin-left:10px;
+  text-align: center;
+  padding: 5px;
+  border-radius: 5px;
+  font-weight: bold;  
+  user-select: none;
+  color: grey;
+}
+.ButtonBar div:hover {
+  background: #61DBFB;
+  font-weight: bold;
+  color: white;
+}
