@@ -1,52 +1,54 @@
 import React, { Component } from 'react';
 import './Card.css';
 
-class CardBody extends Component {
-    
+class CardBody extends Component {  
   state = {
     bodyText: this.props.bodyText,
     bodyTextTemp: '',
-    cardEdit: false,
+    cardEdit: false,    
     cbChecked: false
   };
+  
+  static getDerivedStateFromProps(props, state) {
+    let nextState = null;
 
-  UNSAFE_componentWillReceiveProps(nextProps){    
-    if (nextProps.checkBoxState) {
-      this.setState({cbChecked: true});
-    } else {
-      this.setState({cbChecked: false});
-    }
-
-    if (nextProps.editState) {     
-      this.setState({
-        bodyTextTemp: this.state.bodyText,
+    if (props.checkBoxState !== state.cbChecked) {      
+      nextState = {cbChecked: !state.cbChecked}      
+    };
+    if (props.editState && !state.cardEdit) {
+      nextState = {
+        bodyTextTemp: state.bodyText,
         cardEdit: true,
         cbChecked: false
-      });
-      nextProps.clearState();      
-    } else if (nextProps.cancelState) {            
-      this.setState({        
+      } 
+      props.clearState();
+    };
+    if (props.cancelState) {      
+      nextState = {
         cardEdit: false,
         cbChecked: false
-      });
-      nextProps.clearState();      
-    } else if (nextProps.saveState) {      
-      this.setState({
-        bodyText: this.state.bodyTextTemp,
+      };
+      props.clearState();
+    };
+    if (props.saveState) {      
+      nextState = {
+        bodyText: state.bodyTextTemp,
         cardEdit: false,
         cbChecked: false
-      });
-      nextProps.clearState();      
-    };    
+      };
+      props.clearState();
+    };
+
+    return nextState;
   };
-  
-  changeBodyHandler = (event) => {      
+   
+  changeBodyHandler = (event) => {
     this.setState({bodyTextTemp:  event.target.value});
   };
 
-  renderCardBody = () => {    
+  renderCardBody = () => {      
     let cardBody = null;
-    let textStyle = this.state.cbChecked ? "redText" : "blackText";    
+    let textStyle = this.state.cbChecked ? "redText" : "blackText";
 
     if (!this.state.cardEdit || this.props.onlyView) {
       cardBody = (
@@ -60,7 +62,10 @@ class CardBody extends Component {
       cardBody = (
         <div>
           <div>
-            <textarea className="cardBodyEdit" value={this.state.bodyTextTemp} onChange={this.changeBodyHandler}/>            
+            <textarea
+              className="cardBodyEdit"
+              value={this.state.bodyTextTemp}
+              onChange={this.changeBodyHandler}/>            
           </div>            
         </div>
       )

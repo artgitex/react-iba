@@ -45,55 +45,57 @@ class CardHeader extends Component {
     this.setState({headerTextTemp:  event.target.value});
   };
 
-  renderCardHeader = () => {
-    let cardHeader = null;    
-
-    if (this.props.onlyView) {
-      cardHeader = (
-        <div className="cardHeader">
-          <div className="cardTitle">
-            {this.state.headerText}
-          </div>
-          <div>          
-            <input className="cardCheckmark" type="checkbox" onChange={this.checkBoxHandler} checked={this.state.cbChecked}/>
-          </div>
-        </div>
-      )          
-    } else {
-      if (this.state.cardEdit) {
-        cardHeader = (
-          <div className="cardHeader">       
-            <div>
-              <input className="cardTitle" maxLength="25" type="text" value={this.state.headerTextTemp} onChange={this.changeHeaderHandler}/>         
-            </div>       
-            <div>
-              <MdSave className="cardSave" onClick={this.saveHandler}/>
-              <MdCancel className="cardCancel" onClick={this.cancelHandler}/>          
-            </div>       
-          </div>
-        )
-      } else {
-        cardHeader = (
-          <div className="cardHeader">
-            <div className="cardTitle">
-              {this.state.headerText}           
-            </div>        
-            <div>            
-              <MdEdit className="cardEdit" onClick={this.editHandler} />
-              <input className="cardCheckmark" type="checkbox" onChange={this.checkBoxHandler} checked={this.state.cbChecked} />            
-            </div>        
-          </div>
-        )
-      }    
-    }
-
-    return cardHeader
-  }
+  renderTitle = () => {
+    return this.props.onlyView || !this.state.cardEdit ? (      
+      <div className="cardTitle">
+        {this.state.headerText}
+      </div> ) : (
+      <div>
+        <input 
+          className="cardTitle"
+          maxLength="25"
+          type="text"
+          value={this.state.headerTextTemp}
+          onChange={this.changeHeaderHandler}/>         
+      </div> 
+      )
+  };
+  
+  renderActions() {
+    const {onlyView} = this.props;
+    const {cardEdit} = this.state;
+    
+    return (
+      <div>
+        {!onlyView && cardEdit && (
+          <React.Fragment>
+            <MdSave
+              className="cardSave"
+              onClick={this.saveHandler}/>
+            <MdCancel
+              className="cardCancel"
+              onClick={this.cancelHandler}/> 
+          </React.Fragment>
+        )}
+        {!onlyView && !cardEdit && (          
+            <MdEdit className="cardEdit" onClick={this.editHandler} />
+        )}
+        {(onlyView || !cardEdit) && (
+          <input
+            className="cardCheckmark"
+            type="checkbox"
+            onChange={this.checkBoxHandler}
+            checked={this.state.cbChecked}/>
+        )}
+      </div>
+    )
+  };
   
   render() {    
     return (
-      <div>
-        {this.renderCardHeader()}        
+      <div className="cardHeader">
+        {this.renderTitle()}
+        {this.renderActions()}
       </div>
     )
   }

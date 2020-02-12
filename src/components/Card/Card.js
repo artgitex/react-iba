@@ -29,13 +29,13 @@ class Card extends Component {
       return false
     }
     return true
-  }
+  };
   
   editHandler = (cardEdit) => {
     this.setState({cardEdit: cardEdit});    
   };
 
-  cancelHandler = (cardCancel) => {
+  cancelHandler = (cardCancel) => {   
     this.setState({cardCancel: cardCancel});
   };
 
@@ -44,11 +44,11 @@ class Card extends Component {
   };
 
   checkBoxHandler = (cbChecked) => {
-    this.setState({cbChecked: cbChecked});
+    this.setState({cbChecked});
     this.props.cardsToRemoveHandler(this.props.id, cbChecked);
   };
 
-  clearState = () => {   
+  clearState = () => {
     this.setState({
       cardEdit: false,
       cardCancel: false,
@@ -59,27 +59,25 @@ class Card extends Component {
   }  
 
   render() {    
-    return (
-      <div>        
-        <StyledCard alt={this.props.onlyView ? '#FFA07A' : '#C0C0C0'}>          
-          <CardHeader 
-            headerText={this.props.headerText}
-            onlyView={this.props.onlyView}           
-            checkBoxHandler={this.checkBoxHandler}            
-            editHandler={this.editHandler}
-            cancelHandler={this.cancelHandler}
-            saveHandler={this.saveHandler} />            
-          <hr />
-          <CardBody            
-            bodyText={this.props.bodyText}
-            onlyView={this.props.onlyView}
-            checkBoxState={this.state.cbChecked}
-            editState={this.state.cardEdit} 
-            cancelState={this.state.cardCancel} 
-            saveState={this.state.cardSave}
-            clearState={this.clearState}/>
-        </StyledCard>
-      </div>      
+    return (           
+      <StyledCard alt={this.props.onlyView ? '#FFA07A' : '#C0C0C0'}>          
+        <CardHeader 
+          headerText={this.props.headerText}
+          onlyView={this.props.onlyView}           
+          checkBoxHandler={this.checkBoxHandler}            
+          editHandler={this.editHandler}
+          cancelHandler={this.cancelHandler}
+          saveHandler={this.saveHandler} />            
+        <hr />
+        <CardBody            
+          bodyText={this.props.bodyText}
+          onlyView={this.props.onlyView}
+          checkBoxState={this.state.cbChecked}
+          editState={this.state.cardEdit} 
+          cancelState={this.state.cardCancel} 
+          saveState={this.state.cardSave}
+          clearState={this.clearState}/>
+      </StyledCard>      
     );
   }
 }
