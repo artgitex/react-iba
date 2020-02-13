@@ -16,67 +16,62 @@ const StyledCard = styled.div`
 
 class Card extends Component {
   state = {
-    cardEdit: false,
-    cardCancel: false,
-    cardSave: false,
-    cbChecked: false,
-    clearState: false     
-  };
-
+    cardEdit: false,    
+    cbChecked: false,    
+    headerText: this.props.headerText,
+    headerTextTemp: this.props.headerText,
+    bodyText: this.props.bodyText,
+    bodyTextTemp: this.props.bodyText
+  };  
   
-  shouldComponentUpdate(nextProps, nextState) {
-    if(this.state.clearState !== nextState.clearState) {      
-      return false
-    }
-    return true
+  editHandler = () => {
+    this.setState({cardEdit: true, cbChecked: false});
+  };
+
+  cancelHandler = () => {    
+    this.setState({cardEdit: false, cbChecked: false, bodyTextTemp: this.state.bodyText, headerTextTemp: this.state.headerText});
+  };
+
+  saveHandler = () => {    
+    this.setState({cardEdit: false, cbChecked: false, bodyText: this.state.bodyTextTemp, headerText: this.state.headerTextTemp});    
+  };
+
+  checkBoxHandler = () => {
+    this.setState({cbChecked: !this.state.cbChecked});
+    this.props.cardsToRemoveHandler(this.props.id, !this.state.cbChecked);
   };
   
-  editHandler = (cardEdit) => {
-    this.setState({cardEdit: cardEdit});    
+  bodyChangeHandler = event => {    
+    this.setState({bodyTextTemp: event.target.value});
   };
 
-  cancelHandler = (cardCancel) => {   
-    this.setState({cardCancel: cardCancel});
+  headerChangeHandler = event => {    
+    this.setState({headerTextTemp: event.target.value});
   };
 
-  saveHandler = (cardSave) => {    
-    this.setState({cardSave: cardSave});    
-  };
-
-  checkBoxHandler = (cbChecked) => {
-    this.setState({cbChecked});
-    this.props.cardsToRemoveHandler(this.props.id, cbChecked);
-  };
-
-  clearState = () => {
-    this.setState({
-      cardEdit: false,
-      cardCancel: false,
-      cardSave: false,
-      cbChecked: false,
-      clearState: !this.state.clearState
-    });   
-  }  
-
-  render() {    
+  render() {
+    const {headerText, headerTextTemp, bodyText, bodyTextTemp} = this.state;
     return (           
-      <StyledCard alt={this.props.onlyView ? '#FFA07A' : '#C0C0C0'}>          
+      <StyledCard alt={this.props.onlyView ? '#FFA07A' : '#C0C0C0'}>        
         <CardHeader 
-          headerText={this.props.headerText}
-          onlyView={this.props.onlyView}           
-          checkBoxHandler={this.checkBoxHandler}            
-          editHandler={this.editHandler}
+          headerText={headerText}
+          headerTextTemp={headerTextTemp}
+          isOnlyView={this.props.onlyView}
+          isEdit={this.state.cardEdit}
+          isChecked={this.state.cbChecked}          
+          onChange={this.headerChangeHandler}          
+          editHandler={this.editHandler}          
           cancelHandler={this.cancelHandler}
-          saveHandler={this.saveHandler} />            
+          saveHandler={this.saveHandler}
+          checkBoxHandler={this.checkBoxHandler} />
         <hr />
-        <CardBody            
-          bodyText={this.props.bodyText}
-          onlyView={this.props.onlyView}
-          checkBoxState={this.state.cbChecked}
-          editState={this.state.cardEdit} 
-          cancelState={this.state.cardCancel} 
-          saveState={this.state.cardSave}
-          clearState={this.clearState}/>
+        <CardBody
+          bodyText={bodyText}
+          bodyTextTemp={bodyTextTemp}         
+          isOnlyView={this.props.onlyView}
+          isEdit={this.state.cardEdit}
+          isChecked={this.state.cbChecked}
+          onChange={this.bodyChangeHandler} />
       </StyledCard>      
     );
   }

@@ -2,90 +2,56 @@ import React, { Component } from 'react';
 import { MdEdit, MdSave, MdCancel } from 'react-icons/md';
 import './Card.css';
 
-class CardHeader extends Component {
-  state = {
-    headerText: this.props.headerText,
-    headerTextTemp: '',
-    cardEdit: false,
-    cbChecked: false
-  };
-  
-  editHandler = () => {    
-    this.setState({
-      cardEdit: true,
-      headerTextTemp: this.state.headerText,     
-      cbChecked: false
-    });
-    this.props.editHandler(true);
-  };
-
-  cancelHandler = () => {
-    this.setState({
-      cardEdit: false,
-      cbChecked: false
-    });
-    this.props.cancelHandler(true);
-  };
-
-  saveHandler = () => {
-    this.setState({
-      headerText: this.state.headerTextTemp,      
-      cardEdit: false,
-      cbChecked: false
-    });
-    this.props.saveHandler(true);
-  };
-
-  checkBoxHandler = () => {    
-    this.setState({cbChecked: !this.state.cbChecked});
-    this.props.checkBoxHandler(!this.state.cbChecked);
-  };
-
-  changeHeaderHandler = (event) => {      
-    this.setState({headerTextTemp:  event.target.value});
-  };
-
+class CardHeader extends Component {  
   renderTitle = () => {
-    return this.props.onlyView || !this.state.cardEdit ? (      
-      <div className="cardTitle">
-        {this.state.headerText}
-      </div> ) : (
-      <div>
-        <input 
-          className="cardTitle"
-          maxLength="25"
-          type="text"
-          value={this.state.headerTextTemp}
-          onChange={this.changeHeaderHandler}/>         
+    const {headerText, headerTextTemp, isOnlyView, isEdit, onChange} = this.props;
+    let cardTitle = null;
+
+    if (isOnlyView || !isEdit) {
+      cardTitle = (
+        <div className="cardTitle">
+          {headerText}
+        </div>
+      );
+    } else {
+      cardTitle = (
+        <div>
+          <input 
+            className="cardTitle"
+            maxLength="25"
+            type="text"
+            value={headerTextTemp}
+            onChange={onChange}/>
       </div> 
       )
+    } 
+
+    return cardTitle;    
   };
   
   renderActions() {
-    const {onlyView} = this.props;
-    const {cardEdit} = this.state;
-    
+    const {isOnlyView, isEdit, cancelHandler, saveHandler, editHandler, checkBoxHandler} = this.props;
     return (
       <div>
-        {!onlyView && cardEdit && (
+        {!isOnlyView && isEdit && (
           <React.Fragment>
             <MdSave
               className="cardSave"
-              onClick={this.saveHandler}/>
+              onClick={saveHandler}/>
             <MdCancel
               className="cardCancel"
-              onClick={this.cancelHandler}/> 
+              onClick={cancelHandler}/> 
           </React.Fragment>
         )}
-        {!onlyView && !cardEdit && (          
-            <MdEdit className="cardEdit" onClick={this.editHandler} />
+        {!isOnlyView && !isEdit && (          
+            <MdEdit className="cardEdit" onClick={editHandler} />
         )}
-        {(onlyView || !cardEdit) && (
+        {(isOnlyView || !isEdit) && (
           <input
             className="cardCheckmark"
-            type="checkbox"
-            onChange={this.checkBoxHandler}
-            checked={this.state.cbChecked}/>
+            type="checkbox"            
+            onClick={checkBoxHandler}
+            />
         )}
       </div>
     )

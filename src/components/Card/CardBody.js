@@ -1,85 +1,32 @@
 import React, { Component } from 'react';
 import './Card.css';
 
-class CardBody extends Component {  
-  state = {
-    bodyText: this.props.bodyText,
-    bodyTextTemp: '',
-    cardEdit: false,    
-    cbChecked: false
-  };
-  
-  static getDerivedStateFromProps(props, state) {
-    let nextState = null;
-
-    if (props.checkBoxState !== state.cbChecked) {      
-      nextState = {cbChecked: !state.cbChecked}      
-    };
-    if (props.editState && !state.cardEdit) {
-      nextState = {
-        bodyTextTemp: state.bodyText,
-        cardEdit: true,
-        cbChecked: false
-      } 
-      props.clearState();
-    };
-    if (props.cancelState) {      
-      nextState = {
-        cardEdit: false,
-        cbChecked: false
-      };
-      props.clearState();
-    };
-    if (props.saveState) {      
-      nextState = {
-        bodyText: state.bodyTextTemp,
-        cardEdit: false,
-        cbChecked: false
-      };
-      props.clearState();
-    };
-
-    return nextState;
-  };
-   
-  changeBodyHandler = (event) => {
-    this.setState({bodyTextTemp:  event.target.value});
-  };
-
-  renderCardBody = () => {      
+class CardBody extends Component {
+  render() {
+    const { isOnlyView, isChecked, onChange, isEdit, bodyText, bodyTextTemp } = this.props;
+    const textStyle = isChecked ? 'redText' : 'blackText';
     let cardBody = null;
-    let textStyle = this.state.cbChecked ? "redText" : "blackText";
 
-    if (!this.state.cardEdit || this.props.onlyView) {
+    if (!isEdit || isOnlyView) {
       cardBody = (
         <div className={textStyle}>
-          <div className="cardBodyShow">          
-            {this.state.bodyText}            
-          </div>
+          <div className="cardBodyShow">{bodyText}</div>
         </div>
-      )
-    } else {      
+      );
+    } else {
       cardBody = (
         <div>
           <div>
             <textarea
               className="cardBodyEdit"
-              value={this.state.bodyTextTemp}
-              onChange={this.changeBodyHandler}/>            
-          </div>            
+              value={bodyTextTemp}
+              onChange={onChange}
+            />
+          </div>
         </div>
-      )
-    }   
-
-    return cardBody
-  }
-
-  render() {    
-    return (
-      <div>
-        {this.renderCardBody()}
-      </div>
-    )
+      );
+    }
+    return <div>{cardBody}</div>;
   }
 }
 
