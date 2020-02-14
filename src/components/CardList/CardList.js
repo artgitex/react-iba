@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Card from '../Card/Card';
+import Actions from '../CardList/Actions';
 import './CardList.css';
 
 class CardList extends Component {
@@ -18,7 +19,7 @@ class CardList extends Component {
     
   cardsToRemove = [];
 
-  checkBoxAppHandler = () => {
+  checkBoxAppHandler = () => {   
     this.setState({onlyView: !this.state.onlyView});    
   };
 
@@ -34,7 +35,15 @@ class CardList extends Component {
     let cards = [...this.state.cards];    
     cards = cards.filter(val => !this.cardsToRemove.includes(val.id));
     this.setState({cards: cards});
-  }
+  };
+
+  addCardHandler = () => {    
+    let cards = [...this.state.cards];
+    let lastCard = cards[cards.length-1];
+    let newCard = {id: lastCard.id.slice(0,2) + (+lastCard.id.slice(2,3) + 1), headerText: 'This is new Card', bodyText: 'I expect some text here...'};
+    cards.push(newCard);    
+    this.setState({cards: cards});
+  };
 
   render() {
     let cards = null;    
@@ -52,15 +61,10 @@ class CardList extends Component {
     );      
     return (
       <div>
-        <div className="ButtonBar">
-          <div>
-            <input type="checkbox" id="onlyView" name="onlyView" onChange={this.checkBoxAppHandler} />
-            <label htmlFor="onlyView">View only</label>
-          </div>
-          <div className="appCheckmark" onClick={this.removeCardHandler}>
-            Remove
-          </div>
-        </div>        
+        <Actions 
+          onChange={this.checkBoxAppHandler}
+          onRemove={this.removeCardHandler} 
+          onAdd={this.addCardHandler}/>    
         {cards}
       </div>
     )
