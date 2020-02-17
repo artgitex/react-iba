@@ -3,6 +3,7 @@ import './Card.css';
 import CardHeader from './CardHeader';
 import CardBody from './CardBody';
 import styled from 'styled-components';
+import withLoadingDelay from '../../hoc/withLoadingDelay';
 
 const StyledCard = styled.div`
   margin: 10px;
@@ -21,7 +22,7 @@ class Card extends Component {
     headerText: this.props.headerText,
     headerTextTemp: this.props.headerText,
     bodyText: this.props.bodyText,
-    bodyTextTemp: this.props.bodyText
+    bodyTextTemp: this.props.bodyText    
   };  
   
   editHandler = () => {
@@ -50,7 +51,7 @@ class Card extends Component {
   };
 
   render() {
-    const {headerText, headerTextTemp, bodyText, bodyTextTemp} = this.state;
+    const {headerText, headerTextTemp, bodyText, bodyTextTemp} = this.state;    
     return (           
       <StyledCard alt={this.props.onlyView ? '#FFA07A' : '#C0C0C0'}>        
         <CardHeader 
@@ -77,4 +78,5 @@ class Card extends Component {
   }
 }
 
-export default Card;
+//export default withLoadingDelay(Card);
+export default withLoadingDelay(Card);

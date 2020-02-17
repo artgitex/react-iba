@@ -40,7 +40,7 @@ class CardList extends Component {
   addCardHandler = () => {    
     let cards = [...this.state.cards];
     let lastCard = cards[cards.length-1];
-    let newCard = {id: lastCard.id.slice(0,2) + (+lastCard.id.slice(2,3) + 1), headerText: 'This is new Card', bodyText: 'I expect some text here...'};
+    let newCard = {id: 'id' + (+lastCard.id.slice(2) + 1), headerText: 'This is new Card', bodyText: 'I expect some text here...'};
     cards.push(newCard);    
     this.setState({cards: cards});
   };

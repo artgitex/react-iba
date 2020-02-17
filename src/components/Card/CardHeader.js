@@ -40,7 +40,7 @@ class CardHeader extends Component {
               onClick={saveHandler}/>
             <MdCancel
               className="cardCancel"
-              onClick={cancelHandler}/> 
+              onClick={cancelHandler}/>            
           </React.Fragment>
         )}
         {!isOnlyView && !isEdit && (          
