@@ -3,6 +3,16 @@
   width: 99%;
   height: 100%;
 }
+.appHeader {
+  display: flex; 
+}
+.appHeader div{
+  flex: 1;  
+}
+.appHeader>*:last-child {
+  text-align: right;
+  display: table-cell;
+}
 .logo {  
   width: 50px;
   height: 50px;
@@ -25,4 +35,30 @@ h1 {
 }
 .cardBody div {  
   flex-wrap: wrap;
+}
+.btnCounter {
+  color: #fff;
+  background-color: #10a1b7;
+  border-color: #10a1b7;
+  -moz-user-select: none;  
+  border: 1px solid transparent;  
+  padding: .375rem .75rem;
+  margin-top: 10px;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;  
+}
+.badge {
+  display: inline-block;
+  padding: .25em .4em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25rem;
+  color: #212529;
+  background-color: #f8f9fa;
+ 
 }

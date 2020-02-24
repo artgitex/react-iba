@@ -4,6 +4,7 @@ import CardHeader from './CardHeader';
 import CardBody from './CardBody';
 import styled from 'styled-components';
 import withLoadingDelay from '../../hoc/withLoadingDelay';
+import PropTypes from 'prop-types';
 
 const StyledCard = styled.div`
   margin: 10px;
@@ -51,9 +52,10 @@ class Card extends Component {
   };
 
   render() {
-    const {headerText, headerTextTemp, bodyText, bodyTextTemp} = this.state;    
-    return (           
-      <StyledCard alt={this.props.onlyView ? '#FFA07A' : '#C0C0C0'}>        
+    const {headerText, headerTextTemp, bodyText, bodyTextTemp} = this.state; 
+    
+    return (          
+      <StyledCard alt={this.props.onlyView ? '#FFA07A' : '#C0C0C0'}>           
         <CardHeader 
           headerText={headerText}
           headerTextTemp={headerTextTemp}
@@ -68,7 +70,7 @@ class Card extends Component {
         <hr />
         <CardBody
           bodyText={bodyText}
-          bodyTextTemp={bodyTextTemp}         
+          bodyTextTemp={bodyTextTemp}
           isOnlyView={this.props.onlyView}
           isEdit={this.state.cardEdit}
           isChecked={this.state.cbChecked}
@@ -78,5 +80,21 @@ class Card extends Component {
   }
 }
 
-//export default withLoadingDelay(Card);
+Card.propTypes = {
+  onlyView: PropTypes.bool,
+  cardEdit: PropTypes.bool,
+  cbChecked: PropTypes.bool,
+  headerChangeHandler: PropTypes.func,
+  editHandler: PropTypes.func,
+  cancelHandler: PropTypes.func,
+  saveHandler: PropTypes.func,
+  checkBoxHandler: PropTypes.func,
+  bodyChangeHandler: PropTypes.func,
+  headerText: PropTypes.string,
+  bodyText: PropTypes.string,
+  headerTextTemp: PropTypes.string,
+  bodyTextTemp: PropTypes.string
+}
+
+
 export default withLoadingDelay(Card);

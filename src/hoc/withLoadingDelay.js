@@ -15,15 +15,15 @@ const StyledSpinner = styled.div`
 const withLoadingDelay = (WrappedComponent) => {
     class HOC extends React.Component {
       state = {
-        isLoading: false
+        isLoading: true
       };
 
       componentDidMount() {        
-        setTimeout(() => {this.setState({ isLoading: true })}, 2000);
+        setTimeout(() => {this.setState({ isLoading: false })}, 2000);
       };
 
       render() {        
-        if (this.state.isLoading) {
+        if (!this.state.isLoading) {
             return (<WrappedComponent {...this.props} />);    
         } else {
             return (
