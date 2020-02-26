@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './CardList.css';
 import { CardContextConsumer } from "../../context/Context";
 
-class Actions extends Component {
+class Actions extends Component { 
   render() {    
     return(
       <CardContextConsumer>

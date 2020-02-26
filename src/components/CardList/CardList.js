@@ -11,7 +11,7 @@ class CardList extends Component {
     cards = (
       <div className="cardBody">
         <CardContextConsumer>
-          {context => (
+          {context => (           
             context.cards.map((card, index) => {
               return <Card
                 key={card.id}

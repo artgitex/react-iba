@@ -1,20 +1,30 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 const { Provider, Consumer } = React.createContext();
 
-class CardContextProvider extends Component {
-  state = {
-    cards: [
-      {id:'id1', headerText: 'Tab number One', bodyText: 'I expect some text here...'},
-      {id:'id2', headerText: 'Tab number Two', bodyText: 'I expect some text here...'},
-      {id:'id3', headerText: 'Tab number Three', bodyText: 'I expect some text here...'},
-      {id:'id4', headerText: 'Tab number Four', bodyText: 'I expect some text here...'},
-      {id:'id5', headerText: 'Tab number Five', bodyText: 'I expect some text here...'},
-      {id:'id6', headerText: 'Tab number Six', bodyText: 'I expect some text here...'},
-      {id:'id7', headerText: 'Tab number Seven', bodyText: 'I expect some text here...'}
-    ],
-    onlyView: false
-  };
+class CardContextProvider extends Component {  
+ state = {
+  cards: [],
+  onlyView: false,
+  error: false
+};
+
+  componentDidMount() {        
+    axios.get('https://raw.githubusercontent.com/BrunnerLivio/PokemonDataGraber/master/output.json')
+      .then(response => {
+        const cardsList = response.data.slice(0, 15).map(card => {
+          return {
+            id: card['Number'],
+            headerText: card['Name'],
+            bodyText: card['About']
+          };
+        });
+        this.setState({cards: cardsList});
+      }).catch(error => {
+        this.setState({error: true});
+      });
+   };
 
   cardsToRemove = [];
 
@@ -45,20 +55,24 @@ class CardContextProvider extends Component {
   };
 
   render() {
-    return (
-      <Provider
-        value={{
-          onlyView: this.state.onlyView,
-          cards: this.state.cards,
-          cardsCount: this.state.cards.length,
-          onAdd: this.addCardHandler,
-          onRemove: this.removeCardHandler,
-          removeCard: this.cardsToRemoveHandler,
-          onChange: this.checkBoxAppHandler
-        }} >
-        {this.props.children}
-      </Provider>
-    );
+    if (this.state.error) {
+      return (<p style={{paddingLeft: "10px"}}>Something went wrong!</p>)
+    } else {
+      return (    
+        <Provider
+            value={{
+              onlyView: this.state.onlyView,
+              cards: this.state.cards,
+              cardsCount: this.state.cards.length,
+              onAdd: this.addCardHandler,
+              onRemove: this.removeCardHandler,
+              removeCard: this.cardsToRemoveHandler,
+              onChange: this.checkBoxAppHandler
+            }} >
+            {this.props.children}
+        </Provider>      
+      );
+    }
   }
 }
 
