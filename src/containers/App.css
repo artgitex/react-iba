@@ -4,14 +4,14 @@
   height: 100%;
 }
 .appHeader {
-  display: flex; 
+  display: flex;
 }
-.appHeader div{
+.appHeader div{  
   flex: 1;  
 }
 .appHeader>*:last-child {
   text-align: right;
-  display: table-cell;
+  display: inline-block;
 }
 .logo {  
   width: 50px;
@@ -36,7 +36,7 @@ h1 {
 .cardBody div {  
   flex-wrap: wrap;
 }
-.btnCounter {
+.btnCounter {  
   color: #fff;
   background-color: #10a1b7;
   border-color: #10a1b7;
@@ -59,6 +59,23 @@ h1 {
   vertical-align: baseline;
   border-radius: .25rem;
   color: #212529;
-  background-color: #f8f9fa;
- 
+  background-color: #f8f9fa; 
+}
+.navigation ul{
+  list-style: none;    
+  text-align: right;
+}
+.navigation li {
+  display: inline;
+  margin: 20px;
+}
+.navigation a {
+  text-decoration: none;
+  color: black;
+}
+
+.navigation a:hover,
+.navigation a:active,
+.navigation a.active {
+   color: #fa923f;
 }

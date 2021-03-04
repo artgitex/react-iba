@@ -1,0 +1,33 @@
+.SignIn {        
+    margin-top: 60px;
+    text-align: center;
+}
+.SignIn label {
+    display: block;
+    margin: 10px auto;    
+    font-weight: bold;    
+}
+.SignIn input {
+    display: block;
+    width: 15%;
+    box-sizing: border-box;
+    border: 1px solid black;
+    outline: none;
+    font: inherit;
+    margin: auto;
+}
+.SignIn button {
+    margin-top: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+    font-size: 16px;  
+    font-weight: bold;      
+    background-color: #61DBFB;    
+    cursor: pointer;
+}
+
+.SignIn button:hover,
+.SignIn button:active {
+    color: white;
+    background-color: #fa923f;
+}

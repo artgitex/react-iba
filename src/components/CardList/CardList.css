@@ -1,12 +1,12 @@
-.ButtonBar {
-  display: flex;
+.ButtonBar {  
   margin-top: 10px;
-  margin-bottom: 10px;
-  width: 340px;
+  margin-bottom: 10px;  
+  display: inline-block;
+  width: 50%;
 }
 
-.ButtonBar div {
-  flex: 1;  
+.ButtonBar div {  
+  width: 100px; 
   background: #61DBFB;
   margin-left:10px;
   text-align: center;
@@ -15,6 +15,7 @@
   font-weight: bold;  
   user-select: none;
   color: grey;
+  display: inline-block;
 }
 .ButtonBar div:hover {
   background: #61DBFB;
