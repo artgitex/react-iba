@@ -3,18 +3,18 @@
     text-align: center;
 }
 .SignIn label {
-    display: block;
+    /* display: block;
     margin: 10px auto;    
-    font-weight: bold;    
+    font-weight: bold;*/
 }
 .SignIn input {
-    display: block;
+    /* display: block;
     width: 15%;
     box-sizing: border-box;
     border: 1px solid black;
     outline: none;
     font: inherit;
-    margin: auto;
+    margin: auto; */
 }
 .SignIn button {
     margin-top: 50px;
@@ -26,8 +26,13 @@
     cursor: pointer;
 }
 
-.SignIn button:hover,
-.SignIn button:active {
+.SignIn button:hover:enabled,
+.SignIn button:active:enabled {
     color: white;
     background-color: #fa923f;
+}
+
+.Button:disabled {
+    cursor: not-allowed;
+    background-color: #61DBFB;
 }

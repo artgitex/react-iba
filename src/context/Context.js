@@ -62,8 +62,8 @@ class CardContextProvider extends Component {
     this.setState({cards: cards});    
   }
 
-  submitHandler = (email, password) => {
-    if (email && password) {
+  submitHandler = (formIsValid) => {
+    if (formIsValid) {
       this.setState({submitted: true});
     }    
   }
