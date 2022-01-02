@@ -3,9 +3,10 @@ import './App.css';
 import CardList from '../components/CardList/CardList';
 import {Route, NavLink, Redirect} from 'react-router-dom';
 import SignIn from '../components/SignIn/SignIn';
+import CardEdit from '../components/CardEdit/CardEdit';
 
 class App extends Component {
-  render() {    
+  render() {
     return (
       <div className="App">
         <div className="appHeader">
@@ -22,10 +23,13 @@ class App extends Component {
             </nav>
           </div>          
         </div>
-        <div className="appBar"/>       
-        <Route path='/home' component={CardList} />
-        <Route path='/sign_in' component={SignIn}/>
-        <Redirect from='/'  to='/sign_in' />       
+        <div className="appBar"/>
+
+        <Route path='/home' exact component={CardList} />
+        <Route path='/sign_in' exact component={SignIn}/> 
+        <Route path='/home/:id' component={CardEdit}/>
+        <Redirect from='/'  to='/sign_in' /> 
+
       </div>
     );
   }

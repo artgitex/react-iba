@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import withLoadingDelay from '../../hoc/withLoadingDelay';
 import PropTypes from 'prop-types';
 import {withRouter} from 'react-router-dom';
+import { connect } from 'react-redux';
 
 const StyledCard = styled.div`
   margin: 10px;
@@ -37,13 +38,13 @@ class Card extends Component {
   };
 
   saveHandler = () => {    
-    this.setState({cardEdit: false, cbChecked: false, bodyText: this.state.bodyTextTemp, headerText: this.state.headerTextTemp});    
-    this.props.cardUpdateHandler(this.props.id, this.state.headerTextTemp, this.state.bodyTextTemp, );
+    this.setState({cardEdit: false, cbChecked: false, bodyText: this.state.bodyTextTemp, headerText: this.state.headerTextTemp});
+    this.props.onCardUpdated(this.props.id, this.state.headerTextTemp, this.state.bodyTextTemp);    
   };
 
   checkBoxHandler = () => {
-    this.setState({cbChecked: !this.state.cbChecked});
-    this.props.cardsToRemoveHandler(this.props.id, !this.state.cbChecked);
+    this.setState({cbChecked: !this.state.cbChecked});    
+    this.props.onCardChecked(this.props.id, !this.state.cbChecked);    
   };
   
   bodyChangeHandler = event => {    
@@ -54,11 +55,17 @@ class Card extends Component {
     this.setState({headerTextTemp: event.target.value});
   };
 
+  cardEditHandler = () => {    
+    this.props.history.push(`/home/${this.props.id}`);
+  }
+
   render() {    
-    const {headerText, headerTextTemp, bodyText, bodyTextTemp} = this.state; 
-    
-    return (               
-      <StyledCard alt={this.props.onlyView ? '#FFA07A' : '#C0C0C0'}>      
+
+    const {headerText, headerTextTemp, bodyText, bodyTextTemp} = this.state;     
+    return ( 
+      
+      <StyledCard alt={this.props.onlyView ? '#FFA07A' : '#C0C0C0'} onDoubleClick={this.cardEditHandler}>
+
         <CardHeader 
           headerText={headerText}
           headerTextTemp={headerTextTemp}
@@ -78,7 +85,10 @@ class Card extends Component {
           isEdit={this.state.cardEdit}
           isChecked={this.state.cbChecked}
           onChange={this.bodyChangeHandler} />
+        
       </StyledCard>      
+
+      
     );
   }
 }
@@ -99,5 +109,17 @@ Card.propTypes = {
   bodyTextTemp: PropTypes.string
 }
 
+const mapStateToProps = state => {    
+  return {      
+    cardData: state.cardData
+  }
+};
 
-export default withRouter(withLoadingDelay(Card));
+const mapDispatchToProps = dispatch => {
+  return {
+    onCardChecked: (id, status) => dispatch({type: 'CARDCHECKED', id: id, status: status}),
+    onCardUpdated: (id, header, body) => dispatch({type: 'UPDATECARD', id: id, headerText: header, bodyText: body})
+  }
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(withLoadingDelay(Card)));

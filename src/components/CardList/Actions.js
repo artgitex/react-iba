@@ -1,32 +1,42 @@
 import React, { Component } from 'react';
 import './CardList.css';
-import { CardContextConsumer } from "../../context/Context";
+import { connect } from 'react-redux';
 
-class Actions extends Component { 
-  render() {    
+class Actions extends Component {
+  
+  render() {
     return(
-      <CardContextConsumer>
-        {context => (
-          <div style={{width: '100%'}}>
-            <div className="ButtonBar">           
-              <div>              
-                <input type="checkbox" id="onlyView" name="onlyView" onChange={context.onChange} checked={context.onlyView}/>
-                <label htmlFor="onlyView">View only</label>
-              </div>
-              <div className="appCheckmark" onClick={context.onRemove}>Remove</div>
-              <div className="appCheckmark" onClick={context.onAdd}>Add</div>                          
-            </div>
-            <div style={{display: 'inline-block', width: '50%',textAlign: 'end'}}>
-                <button type="button" className="btnCounter">
-                  Cards <span className="badge badge-light">{context.cardsCount}</span>
-                </button>
-              </div>
+      <div style={{width: '100%'}}>
+        <div className="ButtonBar">           
+          <div>              
+            <input type="checkbox" id="onlyView" name="onlyView" onChange={this.props.onViewOnlyAction} checked={this.props.cardData.onlyView}/>
+            <label htmlFor="onlyView">View only</label>
           </div>
-        )}
-        
-      </CardContextConsumer>
-      )
+          <div className="appCheckmark" onClick={this.props.onRemoveCard}>Remove</div>
+          <div className="appCheckmark" onClick={this.props.onAddNewCard}>Add</div>
+        </div>
+        <div style={{display: 'inline-block', width: '50%',textAlign: 'end'}}>
+          <button type="button" className="btnCounter">
+            Cards <span className="badge badge-light">{this.props.cardData.cards.length}</span>
+          </button>
+        </div>
+      </div>
+    )
   }
 }
 
-export default Actions;
+const mapStateToProps = state => {    
+  return {
+      cardData: state.cardData
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onViewOnlyAction: () =>  dispatch({type: 'VIEWONLY'}),
+    onAddNewCard: () =>  dispatch({type: 'ADDCARD'}),
+    onRemoveCard: () =>  dispatch({type: 'REMOVECARD'})
+  }
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(Actions);

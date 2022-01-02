@@ -4,10 +4,10 @@ import './Input.css';
 const input = (props) => {
   let inputElement = null;
   const inputClasses = ['InputElement'];
-
+    
   if (props.invalid && props.touched) {
     inputClasses.push('Invalid');
-  }
+  }  
 
   switch (props.elementType) {
     case ('input'):

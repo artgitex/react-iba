@@ -1,0 +1,26 @@
+import * as actionTypes from '../actions';
+
+const initialState = {  
+  formIsValid: false,
+  submitted: false
+};
+
+const reducer = ( state = initialState, action ) => {  
+  switch ( action.type ) {    
+    case actionTypes.VALIDATE_FORM:
+      return {
+        ...state,
+        formIsValid: action.value
+      }
+    case actionTypes.SUBMIT:
+      return {
+        ...state,
+        submitted: action.value
+      }
+    default: {}    
+  }
+  return state;
+};
+
+export default reducer;
+  

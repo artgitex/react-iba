@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import './SignIn.css';
-import {Redirect} from 'react-router-dom';
-import { CardContextConsumer } from "../../context/Context";
 import Input from '../../components/Input/Input';
+import axios from 'axios';
+import {withRouter} from 'react-router-dom';
+
+import { connect } from 'react-redux';
 
 class SignIn extends Component {    
     state = {
@@ -39,17 +41,35 @@ class SignIn extends Component {
                 valid: false,
                 touched: false
             }
-        },
-        formIsValid: false,      
-        submitted: false
-    }    
+        }
+    }   
+
+    fillCards = () => {
+        axios.get('https://raw.githubusercontent.com/BrunnerLivio/PokemonDataGraber/master/output.json')
+            .then(response => {
+                const cardsList = response.data.slice(0, 15).map(card => {
+                    return {
+                        id: card['Number'],
+                        headerText: card['Name'],
+                        bodyText: card['About']
+                    };
+                });
+                this.props.onFillCardData(cardsList);                
+                this.props.history.push('/home');                
+            }).catch(error => {
+                this.props.onError(true);        
+        });
+    }
 
     submitHandler = () => {
-        if (this.state.formIsValid) {
-            this.setState({submitted: true});
+        if (this.props.formIsValid) {
+            this.props.onSubmit(true);
+            if (!this.props.cardData.cardsLoaded) {
+                this.fillCards();                
+            }           
         } else {
             alert('Email or Password is Incorrect!!!')
-        }        
+        }       
     };   
 
     inputChangeHandler = (event, inputIdentifier) => {        
@@ -63,8 +83,10 @@ class SignIn extends Component {
         let formIsValid = true;
         for (let inputIdentifier in updatedSignInForm) {
             formIsValid = updatedSignInForm[inputIdentifier].valid && formIsValid;
-        }
-        this.setState({signInForm: updatedSignInForm, formIsValid: formIsValid});
+        }        
+
+        this.setState({signInForm: updatedSignInForm});
+        this.props.onCheckValidityForm(formIsValid);
     }
 
     checkValidity(value, rules) {
@@ -86,12 +108,7 @@ class SignIn extends Component {
         return isValid;
     }
 
-    render() {        
-        let redirect = null;
-        if (this.state.submitted) {            
-            redirect = <Redirect to='/home' />
-        }
-
+    render() {
         const formElementsArray = [];
         for (let key in this.state.signInForm) {
             formElementsArray.push({
@@ -99,13 +116,12 @@ class SignIn extends Component {
                 config: this.state.signInForm[key]
             })
         }
-
+        
         return (
             <div className="SignIn">
-                <CardContextConsumer>
-                  {context => (context.submitted) ? <p style={{color: 'red'}}>You have already Signed In</p> :  null}
-                </CardContextConsumer>
-                
+
+                {(this.props.cardData.cardsLoaded) ? <p style={{color: 'red'}}>You have already Signed In</p> :  null}
+                                
                 {formElementsArray.map(formElement => (
                     <Input 
                         key={formElement.id}
@@ -116,16 +132,30 @@ class SignIn extends Component {
                         touched={formElement.config.touched}
                         changed={(event) => this.inputChangeHandler(event, formElement.id)}                        
                     />
-                ))}                
-
-                <CardContextConsumer>
-                  {context => (<button className='Button' disabled={!this.state.formIsValid} onClick={() => {this.submitHandler(); context.onSubmitUpdate(this.state.formIsValid)}}>Enter</button>)}               
-                </CardContextConsumer>              
+                ))} 
                 
-                {redirect}
+                <button className='Button' disabled={!this.props.formIsValid} onClick={() => {this.submitHandler()}}>Enter</button>                
+                
             </div>
         )
     }
 }
 
-export default SignIn;
+const mapStateToProps = state => {    
+    return {       
+        formIsValid: state.signIn.formIsValid,
+        submitted: state.signIn.submitted,
+        cardData: state.cardData
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {        
+        onSubmit: (val) => dispatch({type: 'SUBMIT', value: val}),        
+        onCheckValidityForm: (val) => dispatch({type: 'VALIDATE_FORM', value: val}),
+        onFillCardData: (val) => dispatch({type: 'FILLCARD', value: val}),
+        onError: (val) => dispatch({type: 'ERROR', value: val})
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SignIn));

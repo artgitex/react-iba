@@ -2,47 +2,49 @@ import React, { Component } from 'react';
 import Card from '../Card/Card';
 import Actions from '../CardList/Actions';
 import './CardList.css';
-import { CardContextConsumer } from "../../context/Context";
 import Page404 from '../Page404/Page404';
 import {Route} from 'react-router-dom';
 
-class CardList extends Component { 
-  
-  render() {    
+import { connect } from 'react-redux';
+
+class CardList extends Component {  
+
+  render() {
     let cardList = null;
 
     cardList = (
       <div>
-        <CardContextConsumer>
-          {context => (
-            (context.submitted) ?  
-              <div className="cardBody">
-                <Actions />
-                {context.cards.map((card, index) => {
-                    return (                  
-                      <Card
-                        key={card.id}
-                        onlyView={context.onlyView}
-                        cardsToRemoveHandler={context.removeCard}
-                        cardUpdateHandler={context.onCardUpdate}
-                        {...card}
-                      />                  
-                    )
-                  })
-                }
-              </div>
-               : <Route component={Page404}/>
-          )}
-        </CardContextConsumer>
+        {(this.props.submitted) ?
+          <div className="cardBody">
+            <Actions />
+            {this.props.cardData.cards.map((card, index) => {
+              return (                
+                <Card
+                  key={card.id}
+                  onlyView={this.props.cardData.onlyView}                  
+                  {...card}
+                />                
+              )
+            })}  
+          </div>
+           : <Route component={Page404}/>}
       </div>
-    );
+    )   
    
     return (
-      <div>        
-        {cardList}        
+      <div>       
+        {cardList}               
       </div>
     )
   }
 }
 
-export default CardList;
+const mapStateToProps = state => {    
+  return {      
+      submitted: state.signIn.submitted,
+      cardData: state.cardData
+  }
+};
+
+
+export default connect(mapStateToProps, null)(CardList);

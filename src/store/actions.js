@@ -1,0 +1,10 @@
+export const VALIDATE_FORM = 'VALIDATE_FORM';
+export const SUBMIT = 'SUBMIT';
+export const FILLCARD = 'FILLCARD';
+export const ERROR = 'ERROR';
+export const ADDCARD = 'ADDCARD';
+export const UPDATECARD = 'UPDATECARD';
+export const CARDCHECKED = 'CARDCHECKED';
+export const REMOVECARD = 'REMOVECARD';
+export const VIEWONLY = 'VIEWONLY';
+export const GET_HEADER_BY_ID = 'GET_HEADER_BY_ID';
