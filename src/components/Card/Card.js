@@ -8,6 +8,8 @@ import PropTypes from 'prop-types';
 import {withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import { onCardChecked, onCardUpdated } from '../../store/actions';
+
 const StyledCard = styled.div`
   margin: 10px;
   padding: 15px;
@@ -86,8 +88,7 @@ class Card extends Component {
           isChecked={this.state.cbChecked}
           onChange={this.bodyChangeHandler} />
         
-      </StyledCard>      
-
+      </StyledCard>
       
     );
   }
@@ -109,17 +110,8 @@ Card.propTypes = {
   bodyTextTemp: PropTypes.string
 }
 
-const mapStateToProps = state => {    
-  return {      
-    cardData: state.cardData
-  }
-};
+const mapStateToProps = state => ({cardData: state.cardData});
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onCardChecked: (id, status) => dispatch({type: 'CARDCHECKED', id: id, status: status}),
-    onCardUpdated: (id, header, body) => dispatch({type: 'UPDATECARD', id: id, headerText: header, bodyText: body})
-  }
-};
+const mapDispatchToProps = { onCardChecked, onCardUpdated };
 
 export default connect(mapStateToProps,mapDispatchToProps)(withRouter(withLoadingDelay(Card)));

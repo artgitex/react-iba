@@ -1,4 +1,4 @@
-import * as actionTypes from '../actions';
+import * as actionTypes from '../types';
 
 const initialState = {  
   formIsValid: false,
@@ -17,9 +17,8 @@ const reducer = ( state = initialState, action ) => {
         ...state,
         submitted: action.value
       }
-    default: {}    
-  }
-  return state;
+    default: return state
+  }  
 };
 
 export default reducer;

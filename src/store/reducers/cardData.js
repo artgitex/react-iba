@@ -1,4 +1,4 @@
-import * as actionTypes from '../actions';
+import * as actionTypes from '../types';
 
 const initialState = {
     cards: [],
@@ -62,10 +62,8 @@ const reducer = ( state = initialState, action ) => {
                 cards: state.cards.filter(val => !state.cardsChecked.includes(val.id))
             }
         
-        default: {}      
+        default: return state
     }
-    
-    return state;
 }
 
 export default reducer;

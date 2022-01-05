@@ -3,8 +3,8 @@ import './SignIn.css';
 import Input from '../../components/Input/Input';
 import axios from 'axios';
 import {withRouter} from 'react-router-dom';
-
 import { connect } from 'react-redux';
+import { onSubmit, onCheckValidityForm, onFillCardData, onError } from '../../store/actions';
 
 class SignIn extends Component {    
     state = {
@@ -134,28 +134,21 @@ class SignIn extends Component {
                     />
                 ))} 
                 
-                <button className='Button' disabled={!this.props.formIsValid} onClick={() => {this.submitHandler()}}>Enter</button>                
+                <button className='Button' disabled={!this.props.formIsValid} onClick={this.submitHandler}>Enter</button>                
                 
             </div>
         )
     }
 }
 
-const mapStateToProps = state => {    
-    return {       
-        formIsValid: state.signIn.formIsValid,
-        submitted: state.signIn.submitted,
-        cardData: state.cardData
-    }
-};
 
-const mapDispatchToProps = dispatch => {
-    return {        
-        onSubmit: (val) => dispatch({type: 'SUBMIT', value: val}),        
-        onCheckValidityForm: (val) => dispatch({type: 'VALIDATE_FORM', value: val}),
-        onFillCardData: (val) => dispatch({type: 'FILLCARD', value: val}),
-        onError: (val) => dispatch({type: 'ERROR', value: val})
-    }
-};
+const mapStateToProps = state => (
+    {
+        submitted: state.signIn.submitted,
+        cardData: state.cardData,
+        formIsValid: state.signIn.formIsValid
+    });
+    
+const mapDispatchToProps = { onSubmit, onCheckValidityForm, onFillCardData, onError };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SignIn));

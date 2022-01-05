@@ -3,6 +3,8 @@ import './CardEdit.css';
 import '../Card/Card.css';
 import { connect } from 'react-redux';
 
+import { onCardUpdated } from '../../store/actions';
+
 class CardEdit extends Component {
     
     card = this.props.cardData.cards.filter(val => val.id === this.props.match.params.id) 
@@ -26,22 +28,20 @@ class CardEdit extends Component {
     }
 
     render() {
-        console.log (this.props.cardData.cards);
-
         return (
             <div className="cardEditN">
                 <input 
                     className="cardTitle"
                     maxLength="25"
                     type="text"
-                    value={this.state.headerTextTemp}
-                    onChange={(event) => this.headerChangeHandler(event)}
+                    value={this.state.headerTextTemp}                    
+                    onChange={this.headerChangeHandler}
                 />
                 <br /><br />
                 <textarea
                     className="cardBodyEdit"
-                    value={this.state.bodyTextTemp}
-                    onChange={(event) => this.bodyChangeHandler(event)}                   
+                    value={this.state.bodyTextTemp}                    
+                    onChange={this.bodyChangeHandler}
                 />
                 <br /><br />
                 <div style={{width: '100%'}}>
@@ -55,16 +55,8 @@ class CardEdit extends Component {
     }    
 }
 
-const mapStateToProps = state => {    
-    return {
-        cardData: state.cardData
-    }
-  };
-  
-  const mapDispatchToProps = dispatch => {
-    return {
-        onCardUpdated: (id, header, body) => dispatch({type: 'UPDATECARD', id: id, headerText: header, bodyText: body})
-    }
-  };
-  
+const mapStateToProps = state => ({cardData: state.cardData});  
+
+const mapDispatchToProps = { onCardUpdated };
+
 export default connect(mapStateToProps,mapDispatchToProps)(CardEdit);

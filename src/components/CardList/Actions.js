@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './CardList.css';
 import { connect } from 'react-redux';
+import { onViewOnlyAction, onAddNewCard, onRemoveCard } from '../../store/actions';
 
 class Actions extends Component {
   
@@ -25,18 +26,8 @@ class Actions extends Component {
   }
 }
 
-const mapStateToProps = state => {    
-  return {
-      cardData: state.cardData
-  }
-};
+const mapStateToProps = state => ({cardData: state.cardData});
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onViewOnlyAction: () =>  dispatch({type: 'VIEWONLY'}),
-    onAddNewCard: () =>  dispatch({type: 'ADDCARD'}),
-    onRemoveCard: () =>  dispatch({type: 'REMOVECARD'})
-  }
-};
+const mapDispatchToProps = { onViewOnlyAction, onAddNewCard, onRemoveCard };
 
 export default connect(mapStateToProps,mapDispatchToProps)(Actions);

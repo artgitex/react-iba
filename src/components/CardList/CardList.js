@@ -39,12 +39,6 @@ class CardList extends Component {
   }
 }
 
-const mapStateToProps = state => {    
-  return {      
-      submitted: state.signIn.submitted,
-      cardData: state.cardData
-  }
-};
-
+const mapStateToProps = state => ({submitted: state.signIn.submitted, cardData: state.cardData});
 
 export default connect(mapStateToProps, null)(CardList);
