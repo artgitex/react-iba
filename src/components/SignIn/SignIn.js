@@ -84,9 +84,12 @@ class SignIn extends Component {
         for (let inputIdentifier in updatedSignInForm) {
             formIsValid = updatedSignInForm[inputIdentifier].valid && formIsValid;
         }        
-
+        
         this.setState({signInForm: updatedSignInForm});
-        this.props.onCheckValidityForm(formIsValid);
+
+        if (formIsValid) {
+            this.props.onCheckValidityForm(formIsValid);  
+        }        
     }
 
     checkValidity(value, rules) {

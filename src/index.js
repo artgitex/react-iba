@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './containers/App';
 import './index.css';
 import {BrowserRouter} from 'react-router-dom';
-import { createStore, combineReducers, applyMiddleware} from "redux";
+import { createStore, combineReducers, applyMiddleware, compose} from "redux";
 import {Provider} from 'react-redux';
 import signInReducer from './store/reducers/sign_in';
 import cardDataReducer from './store/reducers/cardData';
@@ -14,7 +14,19 @@ const rootReducer = combineReducers({
   cardData: cardDataReducer
 });
 
-const store = createStore(rootReducer, applyMiddleware(thunk) );
+const logger = store => {
+  return next => {
+      return action => {
+          console.log("Dispatching", action);
+          const result = next(action);
+          return result;
+      }
+  }
+}
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk, logger)));
 
 ReactDOM.render((  
   <BrowserRouter>
