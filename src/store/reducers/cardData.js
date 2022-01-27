@@ -10,7 +10,7 @@ const initialState = {
 
 const reducer = ( state = initialState, action ) => {
     switch ( action.type ) {
-        case actionTypes.FILLCARD:
+        case actionTypes.FILLCARD:            
             return {
                 ...state,
                 cards: action.value,

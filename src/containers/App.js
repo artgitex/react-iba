@@ -2,11 +2,30 @@ import React, { Component } from 'react';
 import './App.css';
 import CardList from '../components/CardList/CardList';
 import {Route, NavLink, Redirect} from 'react-router-dom';
-import SignIn from '../components/SignIn/SignIn';
+import { signout } from '../store/reducers/signinSlice';
+import SignInU from '../components/SignInU/SignInU';
 import CardEdit from '../components/CardEdit/CardEdit';
+import Settings from '../components/Settings/Settings'
+import { connect } from 'react-redux';
 
 class App extends Component {
-  render() {
+  
+  renderSignin = () => 
+    this.props.signInSlice.submitted
+      ? <li><NavLink to='/sign_in' exact onClick={this.props.signout}>Sign Out</NavLink></li>
+      : <li><NavLink to='/sign_in' exact>Sign In</NavLink></li>
+  
+  renderWelcome = () => 
+    this.props.signInSlice.submitted
+      ? <li><span>Welcome <span style={{fontWeight: 'bold'}}>{this.props.signInSlice.username}</span></span></li>
+      : null
+  
+  renderSettings = () => 
+    (this.props.signInSlice.submitted && this.props.signInSlice.userrole === 'Admin')
+      ? <li><NavLink to='/settings' exact>Settings</NavLink></li>
+      : null
+  
+  render() {    
     return (
       <div className="App">
         <div className="appHeader">
@@ -17,8 +36,10 @@ class App extends Component {
           <div>
             <nav className="navigation">
               <ul>
+                {this.renderWelcome()}
                 <li><NavLink to='/home'>Home</NavLink></li>
-                <li><NavLink to='/sign_in'>Sign In</NavLink></li>                  
+                {this.renderSettings()}
+                {this.renderSignin()}
               </ul>
             </nav>
           </div>          
@@ -26,13 +47,21 @@ class App extends Component {
         <div className="appBar"/>
 
         <Route path='/home' exact component={CardList} />
-        <Route path='/sign_in' exact component={SignIn}/> 
+        <Route path='/sign_in' exact component={SignInU}/> 
+        <Route path='/settings' exact component={Settings}/>
         <Route path='/home/:id' component={CardEdit}/>
-        <Redirect from='/'  to='/sign_in' /> 
-
+        {!this.props.signInSlice.submitted ? <Redirect from='/'  to='/sign_in' /> : null} 
+        
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => (
+  {
+    signInSlice: state.signInSlice     
+  });
+
+const mapDispatchToProps = { signout };
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -27,6 +27,11 @@ class CardEdit extends Component {
         this.props.history.push('/home');
     }
 
+    renderSave = () => 
+        (!this.props.cardData.onlyView)
+        ? (<div className="appCheckmark" onClick={() => {this.props.onCardUpdated(this.props.match.params.id, this.state.headerTextTemp, this.state.bodyTextTemp); this.goToHome()}}>Save</div>)
+        : (null)    
+
     render() {
         return (
             <div className="cardEditN">
@@ -46,7 +51,8 @@ class CardEdit extends Component {
                 <br /><br />
                 <div style={{width: '100%'}}>
                     <div className="ButtonBar">                        
-                        <div className="appCheckmark" onClick={() => {this.props.onCardUpdated(this.props.match.params.id, this.state.headerTextTemp, this.state.bodyTextTemp); this.goToHome()}}>Save</div>
+                        { /*<div className="appCheckmark" onClick={() => {this.props.onCardUpdated(this.props.match.params.id, this.state.headerTextTemp, this.state.bodyTextTemp); this.goToHome()}}>Save</div>*/ }
+                        {this.renderSave()}
                         <div className="appCheckmark" onClick={this.goToHome}>Cancell</div>
                     </div>        
                 </div>

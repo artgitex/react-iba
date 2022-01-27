@@ -6,11 +6,13 @@ import {BrowserRouter} from 'react-router-dom';
 import { createStore, combineReducers, applyMiddleware, compose} from "redux";
 import {Provider} from 'react-redux';
 import signInReducer from './store/reducers/sign_in';
+import signInSlice from './store/reducers/signinSlice';
 import cardDataReducer from './store/reducers/cardData';
 import thunk from 'redux-thunk'; 
 
 const rootReducer = combineReducers({
   signIn: signInReducer,
+  signInSlice: signInSlice,
   cardData: cardDataReducer
 });
 

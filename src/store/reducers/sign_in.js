@@ -1,7 +1,7 @@
 import * as actionTypes from '../types';
 
 const initialState = {  
-  formIsValid: false,
+  formIsValid: true,
   submitted: false
 };
 
@@ -12,7 +12,7 @@ const reducer = ( state = initialState, action ) => {
         ...state,
         formIsValid: action.value
       }
-    case actionTypes.SUBMIT:
+    case actionTypes.SUBMIT:      
       return {
         ...state,
         submitted: action.value

@@ -58,7 +58,7 @@ class Card extends Component {
   };
 
   cardEditHandler = () => {    
-    this.props.history.push(`/home/${this.props.id}`);
+      this.props.history.push(`/home/${this.props.id}`);    
   }
 
   render() {    

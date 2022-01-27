@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
-import './SignIn.css';
+import './SignInU.css';
 import Input from '../../components/Input/Input';
-import axios from 'axios';
 import {withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
-import { onSubmit, onCheckValidityForm, onFillCardData, onError, signin} from '../../store/actions';
 
-//import { signin } from '../../store/reducers/signinSlice'
+import { signin } from '../../store/reducers/signinSlice';
 
-class SignIn extends Component {    
+class SignInU extends Component {    
     state = {
         signInForm: {
             email: {
@@ -43,47 +41,11 @@ class SignIn extends Component {
                 valid: false,
                 touched: false
             }
-        }
-    }   
-
-    fillCards = () => {
-        axios.get('https://raw.githubusercontent.com/BrunnerLivio/PokemonDataGraber/master/output.json')
-            .then(response => {
-                const cardsList = response.data.slice(0, 15).map(card => {
-                    return {
-                        id: card['Number'],
-                        headerText: card['Name'],
-                        bodyText: card['About']
-                    };
-                });
-                this.props.onFillCardData(cardsList);                
-                this.props.history.push('/home');                
-            }).catch(error => {
-                this.props.onError(true);        
-        });
+        },
+        formIsValid: false                
     }
 
-    submitHandler = () => {
-        if (this.props.formIsValid) {
-            
-
-            //this.props.onSubmit(true);
-
-            /*Tests here*/
-            this.props.signin(true);
-            /*Tests here*/
-            console.log(this.props);
-
-            if (!this.props.cardData.cardsLoaded) {
-                this.fillCards();                
-            }           
-        } else {
-            alert('Email or Password is Incorrect!!!')
-        }       
-    };   
-
-    inputChangeHandler = (event, inputIdentifier) => { 
-        console.log('Ia, here')       
+    inputChangeHandler = (event, inputIdentifier) => {        
         const updatedSignInForm = {...this.state.signInForm}
         const updatedFormElement = updatedSignInForm[inputIdentifier];
         updatedFormElement.value = event.target.value;
@@ -99,7 +61,7 @@ class SignIn extends Component {
         this.setState({signInForm: updatedSignInForm});
 
         if (formIsValid) {
-            this.props.onCheckValidityForm(formIsValid);  
+            this.setState({formIsValid: true});            
         }
         
     }
@@ -123,7 +85,17 @@ class SignIn extends Component {
         return isValid;
     }
 
+    submitHandler = () => {
+        if (this.state.formIsValid) {
+            this.props.signin({signedin: true, username: this.state.signInForm.email.value, password: this.state.signInForm.password.value});
+            this.props.history.push('/home'); 
+        } else {
+            alert('Email or Password is Incorrect!!!')
+        }       
+    };   
+    
     render() {
+
         const formElementsArray = [];
         for (let key in this.state.signInForm) {
             formElementsArray.push({
@@ -131,12 +103,12 @@ class SignIn extends Component {
                 config: this.state.signInForm[key]
             })
         }
-        
+
         return (
             <div className="SignIn">
+            
+                {(this.props.signInSlice.submitted) ? <p style={{color: 'red'}}>You have already Signed In</p> :  null}
 
-                {(this.props.cardData.cardsLoaded) ? <p style={{color: 'red'}}>You have already Signed In</p> :  null}
-                                
                 {formElementsArray.map(formElement => (
                     <Input 
                         key={formElement.id}
@@ -145,12 +117,12 @@ class SignIn extends Component {
                         value={formElement.config.value}
                         invalid={!formElement.config.valid}
                         touched={formElement.config.touched}
-                        changed={(event) => this.inputChangeHandler(event, formElement.id)}                        
+                        changed={(event) => this.inputChangeHandler(event, formElement.id)}
                     />
-                ))} 
-                
-                <button className='Button' disabled={!this.props.formIsValid} onClick={this.submitHandler}>Enter</button>
-                
+                ))}
+
+                {<button className='Button' disabled={!this.state.formIsValid} onClick={this.submitHandler}>Enter</button>}
+
             </div>
         )
     }
@@ -159,13 +131,9 @@ class SignIn extends Component {
 const mapStateToProps = state => (
     {
         signInSlice: state.signInSlice,
-
-
-        submitted: state.signIn.submitted,
-        cardData: state.cardData,
-        formIsValid: state.signIn.formIsValid        
+        cardData: state.cardData     
     });
     
-const mapDispatchToProps = { onSubmit, onCheckValidityForm, onFillCardData, onError, signin};
+const mapDispatchToProps = { signin };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SignIn));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SignInU));

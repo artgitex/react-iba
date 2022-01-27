@@ -8,11 +8,13 @@ class Actions extends Component {
   render() {
     return(
       <div style={{width: '100%'}}>
-        <div className="ButtonBar">           
+        <div className="ButtonBar">
+          {/*
           <div>              
             <input type="checkbox" id="onlyView" name="onlyView" onChange={this.props.onViewOnlyAction} checked={this.props.cardData.onlyView}/>
             <label htmlFor="onlyView">View only</label>
           </div>
+          */}
           <div className="appCheckmark" onClick={this.props.onRemoveCard}>Remove</div>
           <div className="appCheckmark" onClick={this.props.onAddNewCard}>Add</div>
         </div>
