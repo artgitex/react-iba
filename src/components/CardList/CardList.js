@@ -15,9 +15,9 @@ class CardList extends Component {
         .then(response => {
             const cardsList = response.data.slice(0, 15).map(card => {
                 return {
-                    id: card['Number'],
-                    headerText: card['Name'],
-                    bodyText: card['About']
+                    id: card.Number,
+                    headerText: card.Name,
+                    bodyText: card.About
                 };
             });
             this.props.onFillCardData(cardsList);
@@ -28,10 +28,8 @@ class CardList extends Component {
 
   render() {
     
-    if (this.props.submitted) {
-      if (!this.props.cardData.cardsLoaded) {    
-        this.fillCards();
-      }
+    if (this.props.submitted && !this.props.cardData.cardsLoaded) {      
+        this.fillCards();      
     }    
 
     let cardList = null; 

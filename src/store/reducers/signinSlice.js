@@ -25,8 +25,7 @@ const signinSlice = createSlice({
             }
 
             sessionStorage.setItem('submitted', user.signedin);
-            sessionStorage.setItem('username', user.username);
-            //sessionStorage.setItem('password', user.password);
+            sessionStorage.setItem('username', user.username);            
             sessionStorage.setItem('userrole', state.userrole);                       
             
         },
@@ -37,8 +36,7 @@ const signinSlice = createSlice({
             state.userrole = ''; 
             
             sessionStorage.removeItem('submitted');
-            sessionStorage.removeItem('username');
-            //sessionStorage.removeItem('password');
+            sessionStorage.removeItem('username');            
             sessionStorage.removeItem('userrole');
         },
     }

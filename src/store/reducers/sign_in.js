@@ -1,7 +1,7 @@
 import * as actionTypes from '../types';
 
 const initialState = {  
-  formIsValid: true,
+  formIsValid: false,
   submitted: false
 };
 

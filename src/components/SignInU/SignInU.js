@@ -62,8 +62,7 @@ class SignInU extends Component {
 
         if (formIsValid) {
             this.setState({formIsValid: true});            
-        }
-        
+        }        
     }
 
     checkValidity(value, rules) {
