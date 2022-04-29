@@ -3,7 +3,7 @@ import './App.css';
 import CardList from '../components/CardList/CardList';
 import {Route, NavLink, Redirect} from 'react-router-dom';
 import { signout } from '../store/reducers/signinSlice';
-import SignInU from '../components/SignInU/SignInU';
+import SignIn from '../components/SignIn/SignIn';
 import CardEdit from '../components/CardEdit/CardEdit';
 import Settings from '../components/Settings/Settings'
 import { connect } from 'react-redux';
@@ -47,7 +47,7 @@ class App extends Component {
         <div className="appBar"/>
 
         <Route path='/home' exact component={CardList} />
-        <Route path='/sign_in' exact component={SignInU}/> 
+        <Route path='/sign_in' exact component={SignIn}/> 
         <Route path='/settings' exact component={Settings}/>
         <Route path='/home/:id' component={CardEdit}/>
         {!this.props.signInSlice.submitted ? <Redirect from='/'  to='/sign_in' /> : null} 

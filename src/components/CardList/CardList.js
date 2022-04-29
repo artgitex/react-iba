@@ -27,32 +27,30 @@ class CardList extends Component {
   }
 
   render() {
+
+    if (!this.props.submitted) {      
+      return <Route component={Page404}/>
+    }
     
     if (this.props.submitted && !this.props.cardData.cardsLoaded) {      
         this.fillCards();      
     }    
-
-    let cardList = null; 
-
-    cardList = (
-      <div>
-        {(this.props.submitted) ?
-          <div className="cardBody">
-            <Actions />
-            {this.props.cardData.cards.map((card, index) => {
-              return (                
-                <Card
-                  key={card.id}
-                  onlyView={this.props.cardData.onlyView}                  
-                  {...card}
-                />                
-              )
-            })}  
-          </div>
-           : <Route component={Page404}/>}
+    
+    const cardList = (
+      <div className="cardBody">
+        <Actions />
+        {this.props.cardData.cards.map((card, index) => {
+          return (                
+            <Card
+              key={card.id}
+              onlyView={this.props.cardData.onlyView}                  
+              {...card}
+            />                
+          )
+        })}  
       </div>
-    )   
-   
+    )
+
     return (
       <div>       
         {cardList}               

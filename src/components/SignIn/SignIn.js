@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import './SignInU.css';
-import Input from '../../components/Input/Input';
+import './SignIn.css';
+import Input from '../Input/Input';
 import {withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -120,7 +120,7 @@ class SignInU extends Component {
                     />
                 ))}
 
-                {<button className='Button' disabled={!this.state.formIsValid} onClick={this.submitHandler}>Enter</button>}
+                <button className='Button' disabled={!this.state.formIsValid} onClick={this.submitHandler}>Enter</button>
 
             </div>
         )
