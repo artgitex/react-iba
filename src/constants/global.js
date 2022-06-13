@@ -1,6 +1,6 @@
-const adminRole = 'Admin';
-const userRole = 'User';
-const adminEmail = 'testAdmin@gmail.com';
-const adminPass = '12345yuiopp';
+const ADMIN_ROLE = 'Admin';
+const USER_ROLE = 'User';
+const ADMIN_EMAIL = 'testAdmin@gmail.com';
+const ADMIN_PASS = '12345yuiopp';
 
-export {adminRole, userRole, adminEmail, adminPass}
+export {ADMIN_ROLE, USER_ROLE, ADMIN_EMAIL, ADMIN_PASS}

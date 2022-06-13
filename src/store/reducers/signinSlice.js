@@ -1,5 +1,5 @@
 import  {createSlice} from "@reduxjs/toolkit";
-import {adminRole, userRole, adminEmail, adminPass} from '../../constants/global';
+import {ADMIN_ROLE, USER_ROLE, ADMIN_EMAIL, ADMIN_PASS} from '../../constants/global';
 
 const signinSlice = createSlice({
     name: 'loging',
@@ -19,10 +19,10 @@ const signinSlice = createSlice({
             state.username = user.username;
             state.password = user.password;
 
-            if (state.username === adminEmail && state.password === adminPass) {
-                state.userrole = adminRole;
+            if (state.username === ADMIN_EMAIL && state.password === ADMIN_PASS) {
+                state.userrole = ADMIN_ROLE;
             } else {
-                state.userrole = userRole;
+                state.userrole = USER_ROLE;
             }
 
             sessionStorage.setItem('submitted', user.signedin);
