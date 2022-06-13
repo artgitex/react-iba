@@ -13,17 +13,13 @@ class CardList extends Component {
   fillCards = () => {
     axios.get('https://raw.githubusercontent.com/BrunnerLivio/PokemonDataGraber/master/output.json')
         .then(response => {
-            const cardsList = response.data.slice(0, 15).map(card => {
-                return {
-                    id: card.Number,
-                    headerText: card.Name,
-                    bodyText: card.About
-                };
-            });
+            const cardsList = response.data.slice(0, 15).map(card => ({
+                id: card.Number,
+                headerText: card.Name,
+                bodyText: card.About                
+            }));
             this.props.onFillCardData(cardsList);
-        }).catch(error => {
-            this.props.onError(true);        
-    });
+        }).catch(error => this.props.onError(true));
   }
 
   render() {
@@ -39,15 +35,13 @@ class CardList extends Component {
     const cardList = (
       <div className="cardBody">
         <Actions />
-        {this.props.cardData.cards.map((card, index) => {
-          return (                
-            <Card
-              key={card.id}
-              onlyView={this.props.cardData.onlyView}                  
-              {...card}
-            />                
-          )
-        })}  
+        {this.props.cardData.cards.map((card, index) =>           
+          <Card
+            {...card}
+            key={card.id}
+            onlyView={this.props.cardData.onlyView}
+          />
+        )}  
       </div>
     )
 

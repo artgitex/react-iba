@@ -3,18 +3,17 @@ import { connect } from 'react-redux';
 import '../../containers/App.css'
 import {NavLink} from 'react-router-dom';
 import { signout } from '../../store/reducers/signinSlice';
+import {adminRole} from '../../constants/global'
 
 const Layout = (props) => {
 
   const renderWelcome = () => 
     props.signInSlice.submitted
-      ? <li><span>Welcome <span style={{fontWeight: 'bold'}}>{props.signInSlice.username}</span></span></li>
-      : null
+      && <li><span>Welcome <span style={{fontWeight: 'bold'}}>{props.signInSlice.username}</span></span></li>      
     
   const renderSettings = () => 
-    (props.signInSlice.submitted && props.signInSlice.userrole === 'Admin')
-      ? <li><NavLink to='/settings' exact>Settings</NavLink></li>
-      : null
+    (props.signInSlice.submitted && props.signInSlice.userrole === adminRole)
+      && <li><NavLink to='/settings' exact>Settings</NavLink></li>      
   
   const renderSignin = () => 
     props.signInSlice.submitted

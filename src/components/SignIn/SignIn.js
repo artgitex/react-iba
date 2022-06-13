@@ -106,7 +106,7 @@ class SignInU extends Component {
         return (
             <div className="SignIn">
             
-                {(this.props.signInSlice.submitted) ? <p style={{color: 'red'}}>You have already Signed In</p> :  null}
+                {(this.props.submitted) && <p style={{color: 'red'}}>You have already Signed In</p>}
 
                 {formElementsArray.map(formElement => (
                     <Input 
@@ -129,8 +129,7 @@ class SignInU extends Component {
 
 const mapStateToProps = state => (
     {
-        signInSlice: state.signInSlice,
-        cardData: state.cardData     
+        submitted: state.signInSlice.submitted        
     });
     
 const mapDispatchToProps = { signin };

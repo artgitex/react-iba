@@ -12,13 +12,13 @@ const Routes = (props) => (
         <Route path='/sign_in' exact component={SignIn}/> 
         <Route path='/settings' exact component={Settings}/>
         <Route path='/home/:id' component={CardEdit}/>
-        {!props.signInSlice.submitted ? <Redirect from='/'  to='/sign_in' /> : null}         
+        {!props.submitted && <Redirect from='/'  to='/sign_in' />}         
     </Switch>
 )
 
 const mapStateToProps = state => (
     {
-      signInSlice: state.signInSlice     
+      submitted: state.signInSlice.submitted    
     });
 
 export default connect(mapStateToProps, null)(Routes);
